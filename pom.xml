@@ -51,20 +51,5 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <de.tototec.cmdoption.version>0.6.0</de.tototec.cmdoption.version>
     </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>de.tototec</groupId>
-            <artifactId>de.tototec.cmdoption</artifactId>
-            <version>${de.tototec.cmdoption.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.spullara.cli-parser</groupId>
-            <artifactId>cli-parser</artifactId>
-            <version>1.1.5</version>
-        </dependency>
-
-    </dependencies>
 </project>
