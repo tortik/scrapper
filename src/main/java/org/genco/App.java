@@ -15,7 +15,7 @@ public class App {
     public static void main(String[] args) {
         try {
             CmdArgsResolver.Arguments arguments = new CmdArgsResolver().parse(args);
-            if (arguments.getFiles().size() == 0) {
+            if (arguments.getFiles().isEmpty()) {
                 System.out.println("No files to parse, exiting");
                 System.exit(0);
             }
@@ -29,7 +29,7 @@ public class App {
 
     private static void parse(CmdArgsResolver.Arguments arguments) throws ExecutionException, InterruptedException {
         ProcessingStrategy processingStrategy = arguments.isCharacterCount() ? new CharCountStrategy() : new WordCountStrategy();
-        System.out.printf("Resolved %d file(s) with %s stop words and %s counter\n", arguments.getFiles().size(), arguments.getExclusionWords(), arguments.isCharacterCount() ? "character" : "word");
+        System.out.printf("Resolved %d file(s) with %s stop words and %s counter%n", arguments.getFiles().size(), arguments.getExclusionWords(), arguments.isCharacterCount() ? "character" : "word");
 
         System.out.println("Start counting...");
 

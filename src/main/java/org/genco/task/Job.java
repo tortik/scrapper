@@ -25,15 +25,15 @@ public class Job {
 
     public void execute() throws InterruptedException, ExecutionException {
         Predicate<String> wordExclusion = new ExclusionWordPredicate(exclusions);
-        paths.forEach(path-> completionService.submit(
+        paths.forEach(path -> completionService.submit(
                 () -> new FileReaderTask(wordExclusion, processingStrategy, path).count()));
 
         AtomicInteger count = new AtomicInteger(0);
-        for (Path p : paths) {
+        for (int i = 0; i < paths.size(); i++) {
             Future<Integer> res = completionService.take();
             count.addAndGet(res.get());
         }
-        System.out.printf("Total Count is %s\n", count.get());
+        System.out.printf("Total Count is %s%n", count.get());
 
     }
 
@@ -41,6 +41,7 @@ public class Job {
         int cores = Runtime.getRuntime().availableProcessors();
         final ThreadFactory threadFactory = new ThreadFactory() {
             private final AtomicInteger threadNumber = new AtomicInteger(0);
+
             @Override
             public Thread newThread(Runnable runnable) {
                 return new Thread(runnable, "file-parser-" + this.threadNumber.getAndIncrement());

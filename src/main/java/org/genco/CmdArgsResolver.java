@@ -8,7 +8,8 @@ import java.util.stream.Collectors;
 public class CmdArgsResolver {
 
     public Arguments parse(String[] args) {
-        int cur = 0, last = args.length - 1;
+        int cur = 0;
+        int last = args.length - 1;
         Arguments arguments = new Arguments();
         while (cur <= last) {
             String arg = args[cur];
@@ -62,7 +63,7 @@ public class CmdArgsResolver {
         public void addFile(String file) {
             Path path = Paths.get(file);
             if (!path.toFile().exists()) {
-                System.out.printf("File %s not exist\n", path);
+                System.out.printf("File %s not exist%n", path);
                 throw new IllegalArgumentException("Can't resolve path " + path);
             }
             this.files.add(path);
