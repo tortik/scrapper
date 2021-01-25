@@ -27,9 +27,9 @@ public class App {
         Job job = new Job(arguments.getFiles(), arguments.getExclusionWords(), processingStrategy);
         try {
             job.execute();
-            job.shutdown();
         } catch (Exception ex) {
             System.out.println("Encountered with issue during processing a file(s), please check your input file(s)");
+        } finally {
             job.shutdown();
         }
     }
