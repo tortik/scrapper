@@ -15,12 +15,14 @@ public class Job {
     private final Set<String> exclusions;
     private final ProcessingStrategy processingStrategy;
     private final CompletionService<Integer> completionService;
+    private final ExecutorService executorService;
 
     public Job(List<Path> paths, Set<String> exclusions, ProcessingStrategy processingStrategy) {
         this.paths = paths;
         this.exclusions = exclusions;
         this.processingStrategy = processingStrategy;
-        this.completionService = completionService(paths);
+        this.executorService = executorService(paths);
+        this.completionService = new ExecutorCompletionService<>(executorService);
     }
 
     public void execute() throws InterruptedException, ExecutionException {
@@ -37,7 +39,7 @@ public class Job {
 
     }
 
-    private CompletionService<Integer> completionService(List<Path> paths) {
+    private ExecutorService executorService(List<Path> paths) {
         int cores = Runtime.getRuntime().availableProcessors();
         final ThreadFactory threadFactory = new ThreadFactory() {
             private final AtomicInteger threadNumber = new AtomicInteger(0);
@@ -47,8 +49,11 @@ public class Job {
                 return new Thread(runnable, "file-parser-" + this.threadNumber.getAndIncrement());
             }
         };
-        Executor executor = Executors.newFixedThreadPool(Math.min(cores, paths.size()), threadFactory);
-        return new ExecutorCompletionService<>(executor);
+        return Executors.newFixedThreadPool(Math.min(cores, paths.size()), threadFactory);
+    }
+
+    public void shutdown(){
+        executorService.shutdownNow();
     }
 
 }
