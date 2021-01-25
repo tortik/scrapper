@@ -1,6 +1,6 @@
 # Scrapper tool
 
-I see here multiple challenges in this task:
+I see multiple challenges in this task:
 1) how to read multiple files simultaneously or few Big files?
 Basically based on input files we should decide on concurrency strategy.
 
